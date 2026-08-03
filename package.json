@@ -1,0 +1,28 @@
+{
+  "name": "peppermill-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PepperMill white-label chargeback management portal, powered by Chargebacks911",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace @peppermill/api",
+    "dev:web": "npm run dev --workspace @peppermill/web",
+    "build": "npm run build --workspace @peppermill/shared && npm run build --workspace @peppermill/api && npm run build --workspace @peppermill/web",
+    "start": "npm run start --workspace @peppermill/api",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "node -e \"const{rmSync}=require('fs');['node_modules','apps/api/dist','apps/web/dist','packages/shared/dist'].forEach(p=>rmSync(p,{recursive:true,force:true}))\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
